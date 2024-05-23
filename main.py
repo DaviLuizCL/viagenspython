@@ -12,7 +12,7 @@ def login():
 @app.route('/viagens')
 def register_travel():
     return render_template('register_travel.html')
-@app.route('/usuarios')
+@app.route('/registrar')
 def user():
     return render_template('register_user.html')
 if __name__ == '__main__':

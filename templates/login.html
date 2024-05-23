@@ -18,7 +18,10 @@
                 <label for="password">Senha</label>
                 <input type="password" class="form-control" id="password" placeholder="Insira sua senha">
             </div>
-            <button type="submit" class="btn btn-primary">Entrar</button>
+            <div class="btn-group" role="group" aria-label="Botões de ação">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-sm">Voltar</a>
+            </div>
         </form>
     </div>
 
