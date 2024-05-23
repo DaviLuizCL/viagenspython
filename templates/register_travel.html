@@ -2,9 +2,36 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Viagem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Viagens</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Aqui cadastra a viagem</h1>
-</body>
-</html>
+    <div class="container">
+        <h1 class="mt-5">Registro de Viagens</h1>
+        <form>
+            <div class="form-group">
+                <label for="destination">Destino</label>
+                <input type="text" class="form-control" id="destination" placeholder="Insira o destino da viagem">
+            </div>
+            <div class="form-group">
+                <label for="departure-date">Data de Partida</label>
+                <input type="date" class="form-control" id="departure-date">
+            </div>
+            <div class="form-group">
+                <label for="return-date">Data de Retorno</label>
+                <input type="date" class="form-control" id="return-date">
+            </div>
+            <div class="form-group">
+                <label for="number-of-people">Número de Pessoas</label>
+                <input type="number" class="form-control" id="number-of-people" placeholder="Quantas pessoas vão viajar?">
+            </div>
+            <div class="form-group">
+                <label for="description">Descrição</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Insira uma descrição da viagem"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar Viagem</button>
+        </form>
+    </div>
+
+    <script src="https://code.jque
