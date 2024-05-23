@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
+from db_connection import create_connection
+
 app = Flask(__name__)
 
 #Começando bem
@@ -41,6 +43,6 @@ def user():
 
     return render_template('register_user.html', error_message=error_message)
 
-
+create_connection()
 if __name__ == '__main__':
     app.run(debug=True)
