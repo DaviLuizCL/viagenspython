@@ -9,22 +9,29 @@
 <body>
     <div class="container">
         <h1 class="mt-5">Registro de Usuários</h1>
-        <form>
+
+        {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/registrar">
             <div class="form-group">
                 <label for="name">Nome</label>
-                <input type="text" class="form-control" id="name" placeholder="Insira seu nome">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Insira seu nome">
             </div>
             <div class="form-group">
                 <label for="email">Endereço de E-mail</label>
-                <input type="email" class="form-control" id="email" placeholder="Insira seu e-mail">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Insira seu e-mail">
             </div>
             <div class="form-group">
                 <label for="password">Senha</label>
-                <input type="password" class="form-control" id="password" placeholder="Crie uma senha">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Crie uma senha">
             </div>
             <div class="form-group">
                 <label for="confirm-password">Confirmar Senha</label>
-                <input type="password" class="form-control" id="confirm-password" placeholder="Confirme sua senha">
+                <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirme sua senha">
             </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>
