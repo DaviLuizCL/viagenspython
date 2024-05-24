@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-from db_connection import create_connection
-
+from db_connection import create_connection, insert_user
+import os
 app = Flask(__name__)
-
+print(os.getcwd())
+print(os.listdir())
 #Começando bem
 @app.route('/')
 def index():
@@ -32,6 +33,11 @@ def user():
         if senha != confirmar_senha:
             error_message = 'As senhas não correspondem. Tente novamente.'
             return render_template('register_user.html', error_message=error_message)
+
+        if insert_user(nome, email, senha):
+            return redirect(url_for('index'))
+        else:
+            error_message = "Erro ao registrar o usuario, tente novamente mais tarde"
 
         # Processamento dos dados do formulário (ex.: salvar no banco de dados)
         print(f"Nome: {nome}")
