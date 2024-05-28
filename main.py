@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-from db_connection import create_connection, insert_user
+from db_connection import create_connection, insert_user, insert_travel
 import os
 app = Flask(__name__)
 print(os.getcwd())
@@ -48,6 +48,32 @@ def user():
         return redirect(url_for('index'))
 
     return render_template('register_user.html', error_message=error_message)
+
+@app.route('/viagens', methods=['GET', 'POST'])
+def travel_register():
+    error_message = None
+    if request.method == 'post':
+        destino = request.form['destination']
+        data_partida = request.form['departure-date']
+        data_retorno = request.form['return-date']
+        numero_de_pessoas = request.form['number-of-people']
+        descricao = request.form['description']
+
+        if insert_travel(destino, data_partida, data_retorno, numero_de_pessoas, descricao):
+            return redirect(url_for('index'))
+        else:
+            error_message = "Erro ao registrar o viagem, tente novamente mais tarde"
+            
+        print(f"Destino: {destino}")
+        print(f"Data de partida: {data_partida}")
+        print(f"Data de retorno: {data_retorno}")
+        print(f"Número de pessoas: {numero_de_pessoas}")
+        print(f"Descrição : {descricao}")
+
+        return redirect(url_for('index'))
+    
+    return render_template('register_travel.html', error_message=error_message)
+
 
 create_connection()
 if __name__ == '__main__':
