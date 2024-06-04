@@ -1,80 +1,82 @@
-from flask import Flask, render_template, request, redirect, url_for
-
-from db_connection import create_connection, insert_user, insert_travel
+from flask import Flask, request, jsonify
+import json
 import os
+
 app = Flask(__name__)
-print(os.getcwd())
-print(os.listdir())
-#Começando bem
-@app.route('/')
-def index():
-    return render_template('index.html')
 
+CAMINHO_ARQUIVO = 'db.json'
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+def ler_banco_dados():
+    if not os.path.exists(CAMINHO_ARQUIVO):
+        return {"usuarios": []}
+    with open(CAMINHO_ARQUIVO, 'r') as arquivo:
+        return json.load(arquivo)
 
+def salvar_banco_dados(banco_dados):
+    with open(CAMINHO_ARQUIVO, 'w') as arquivo:
+        json.dump(banco_dados, arquivo, indent=4)
 
-@app.route('/viagens')
-def register_travel():
-    return render_template('register_travel.html')
+@app.route('/usuarios', methods=['GET'])
+def listar_usuarios():
+    banco_dados = ler_banco_dados()
+    return jsonify(banco_dados)
 
+@app.route('/cadastro/usuarios', methods=['POST'])
+def cadastrar_usuario():
+    dados = request.json
 
-@app.route('/registrar', methods=['GET', 'POST'])
-def user():
-    error_message = None
-    if request.method == 'POST':
-        nome = request.form['name']
-        email = request.form['email']
-        senha = request.form['password']
-        confirmar_senha = request.form['confirm-password']
+    if not all(k in dados for k in ("nome", "email", "senha")):
+        return jsonify({"erro": "Dados incompletos"}), 400
 
-        if senha != confirmar_senha:
-            error_message = 'As senhas não correspondem. Tente novamente.'
-            return render_template('register_user.html', error_message=error_message)
+    nome = dados["nome"]
+    email = dados["email"]
+    senha = dados["senha"]
 
-        if insert_user(nome, email, senha):
-            return redirect(url_for('index'))
-        else:
-            error_message = "Erro ao registrar o usuario, tente novamente mais tarde"
+    banco_dados = ler_banco_dados()
 
-        # Processamento dos dados do formulário (ex.: salvar no banco de dados)
-        print(f"Nome: {nome}")
-        print(f"Email: {email}")
-        print(f"Senha: {senha}")
-        print(f"Confirmar Senha: {confirmar_senha}")
+    for usuario in banco_dados["usuarios"]:
+        if usuario["email"] == email:
+            return jsonify({"erro": "Email já cadastrado"}), 400
 
-        return redirect(url_for('index'))
+    novo_usuario = {
+        "nome": nome,
+        "email": email,
+        "senha": senha
+    }
+    banco_dados["usuarios"].append(novo_usuario)
+    salvar_banco_dados(banco_dados)
 
-    return render_template('register_user.html', error_message=error_message)
+    return jsonify({"mensagem": "Usuário cadastrado com sucesso"}), 201
 
-@app.route('/viagens', methods=['GET', 'POST'])
-def travel_register():
-    error_message = None
-    if request.method == 'post':
-        destino = request.form['destination']
-        data_partida = request.form['departure-date']
-        data_retorno = request.form['return-date']
-        numero_de_pessoas = request.form['number-of-people']
-        descricao = request.form['description']
+@app.route('/viagens', methods=['GET'])
+def listar_viagens():
+    banco_dados = ler_banco_dados()
+    return jsonify(banco_dados["viagens"])
 
-        if insert_travel(destino, data_partida, data_retorno, numero_de_pessoas, descricao):
-            return redirect(url_for('index'))
-        else:
-            error_message = "Erro ao registrar o viagem, tente novamente mais tarde"
-            
-        print(f"Destino: {destino}")
-        print(f"Data de partida: {data_partida}")
-        print(f"Data de retorno: {data_retorno}")
-        print(f"Número de pessoas: {numero_de_pessoas}")
-        print(f"Descrição : {descricao}")
+@app.route('/cadastro/viagens', methods=['POST'])
+def cadastrar_viagens():
+    dados = request.json
 
-        return redirect(url_for('index'))
-    
-    return render_template('register_travel.html', error_message=error_message)
+    if not all(k in dados for k in ("destino", "data_inicio", "data_termino", "roteiro")):
+        return jsonify({"erro": "Dados incompletos"}), 400
 
+    destino = dados["destino"]
+    data_inicio = dados["data_inicio"]
+    data_termino = dados["data_termino"]
+    roteiro = dados["roteiro"]
 
-create_connection()
+    banco_dados = ler_banco_dados()
+
+    nova_viagem = {
+        "destino": destino,
+        "data_inicio": data_inicio,
+        "data_termino": data_termino,
+        "roteiro": roteiro
+    }
+    banco_dados["viagens"].append(nova_viagem)
+    salvar_banco_dados(banco_dados)
+
+    return jsonify({"mensagem": "Viagem cadastrado com sucesso!"}), 201
+
 if __name__ == '__main__':
     app.run(debug=True)
