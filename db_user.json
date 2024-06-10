@@ -1,0 +1,24 @@
+{
+    "usuarios": [
+        {
+            "nome": "fernando",
+            "email": "fernandofrancafilho8@gmail.com",
+            "senha": "cu"
+        },
+        {
+            "nome": "Fernando Nascimento De Fran\u00e7a Filho",
+            "email": "gggjpaddd@gmail.com",
+            "senha": "123"
+        },
+        {
+            "nome": "fernando",
+            "email": "fernandofrancafilho9@gmail.com",
+            "senha": "123"
+        },
+        {
+            "nome": "fernando",
+            "email": "fernandofrancafilho10@gmail.com",
+            "senha": "123"
+        }
+    ]
+}
