@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="col">
+
+        <form method="POST" action="" class="border">
+            <legend>Criar Viagem</legend>
+           <fieldset>
+            <div class="form-group">
+                {{ form_criarViagem.destino.label(class="form-control-label") }}
+                {{ form_criarViagem.destino(class="form-control") }}          
+        </div>
+        <div class="form-group">
+            {{ form_criarViagem.data_inicio.label(class="form-control-label") }}
+            {{ form_criarViagem.data_inicio(class="form-control", placeholder="dd-mm-yyyy") }}
+        </div>
+        <div class="form-group">
+            {{ form_criarViagem.data_termino.label(class="form-control-label") }}
+            {{ form_criarViagem.data_termino(class="form-control", placeholder="dd-mm-yyyy") }}
+        </div>
+{% endblock %}

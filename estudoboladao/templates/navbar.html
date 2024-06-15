@@ -14,12 +14,24 @@
         </li>
       </ul>
       <ul class="d-flex navbar-nav">
+        {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('criar_viagem') }}">Criar viagem</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('perfil') }}">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('sair') }}">Sair</a>
+          </li>
+        {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('login') }}">Login</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('login') }}">Criar Conta</a>
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>
