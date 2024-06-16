@@ -61,7 +61,6 @@ def perfil():
 @login_required
 def criar_viagem():
     form_criarViagem = FormCriarViagem()
-    #Destino, data de inicio, data de termino e roteiro
     if form_criarViagem.validate_on_submit() and 'botao_submit_criarViagem' in request.form:
         viagem = Viagem(destino=form_criarViagem.destino.data,
          data_inicio=form_criarViagem.data_inicio.data,
@@ -113,3 +112,23 @@ def excluir_viagem(viagem_id):
     database.session.commit()
     flash('Post Excluído', 'alert-danger')
     return redirect(url_for('usuarios'))
+
+
+@app.route('/viagem/pesquisar', methods=['GET', 'POST'])
+@login_required
+def pesquisar_viagem():
+    destino = request.args.get('destino', '')
+    data_inicio = request.args.get('data_inicio', '')
+    data_termino = request.args.get('data_termino', '')
+
+    viagens = Viagem.query
+    if destino:
+        viagens = viagens.filter(Viagem.destino.ilike(f'%{destino}%'))
+    if data_inicio:
+        viagens = viagens.filter(Viagem.data_inicio >= data_inicio)
+    if data_termino:
+        viagens = viagens.filter(Viagem.data_termino <= data_termino)
+
+    viagens = viagens.all()
+    
+    return render_template('pesquisar_viagem.html', viagens=viagens)

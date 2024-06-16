@@ -4,7 +4,10 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Viagens Cadastradas</h1>
-        <a href="{{ url_for('criar_viagem') }}" class="btn btn-success">Adicionar nova viagem</a>
+        <div>
+            <a href="{{ url_for('pesquisar_viagem') }}" class="btn btn-info me-2">Pesquisar Viagens</a>
+            <a href="{{ url_for('criar_viagem') }}" class="btn btn-success">Adicionar nova viagem</a>
+        </div>
     </div>
     <div class="row">
         {% for viagem in viagens %}

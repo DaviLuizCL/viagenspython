@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Pesquisar Viagens</h1>
+    <form method="GET" action="{{ url_for('pesquisar_viagem') }}">
+        <div class="mb-3">
+            <label for="destino" class="form-label">Destino</label>
+            <input type="text" class="form-control" id="destino" name="destino" placeholder="Digite o destino">
+        </div>
+        <div class="mb-3">
+            <label for="data_inicio" class="form-label">Data de Início</label>
+            <input type="date" class="form-control" id="data_inicio" name="data_inicio">
+        </div>
+        <div class="mb-3">
+            <label for="data_termino" class="form-label">Data de Término</label>
+            <input type="date" class="form-control" id="data_termino" name="data_termino">
+        </div>
+        <button type="submit" class="btn btn-primary">Pesquisar</button>
+    </form>
+
+    <h2 class="mt-5">Resultados da Pesquisa</h2>
+    <div class="row">
+        {% for viagem in viagens %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ viagem.destino }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Data de Início: {{ viagem.data_inicio.strftime('%d/%m/%Y') }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Data de Término: {{ viagem.data_termino.strftime('%d/%m/%Y') }}</h6>
+                    <p class="card-text">{{ viagem.roteiro }}</p>
+                    <a href="{{ url_for('editar_viagem', viagem_id=viagem.id) }}" class="btn btn-primary me-2">Editar</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#excluirViagemModal{{ viagem.id }}">Excluir</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
