@@ -1,9 +1,8 @@
 from flask import render_template, url_for, redirect, flash, request
 from estudoboladao import app, database, bcrypt
-from estudoboladao.forms import FormLogin, FormCriarConta, FormCriarViagem
+from estudoboladao.forms import FormLogin, FormCriarConta, FormCriarViagem, FormEditarViagem, FormEditarViagem
 from estudoboladao.models import Usuario, Viagem
 from flask_login import login_user, logout_user, current_user, login_required
-lista_usuarios = ['Lira', 'João', 'Alon', 'Alessandra', 'Amanda']
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -74,3 +73,32 @@ def criar_viagem():
         flash(f'Viagem para {form_criarViagem.destino.data}, criada com sucesso!', 'alert-success')
         return redirect(url_for('usuarios'))
     return render_template('criarviagem.html', form_criarViagem=form_criarViagem)
+
+
+
+@app.route('/viagem/<viagem_id>', methods=['GET', 'POST'])
+@login_required
+def editar_viagem(viagem_id):
+    viagem = Viagem.query.get(viagem_id)
+    form = FormEditarViagem()
+    if request.method == 'GET':
+        form.destino.data = viagem.destino
+        form.data_inicio.data = viagem.data_inicio
+        form.data_termino.data = viagem.data_termino
+        form.roteiro.data = viagem.roteiro
+    elif form.validate_on_submit():
+        viagem.destino = form.destino.data
+        viagem.data_inicio = form.data_inicio.data
+        viagem.data_termino = form.data_termino.data
+        viagem.roteiro = form.roteiro.data
+        database.session.commit()
+
+    if form.validate_on_submit() and 'botao_submit_editarViagem' in request.form:
+        viagem = Viagem(destino=form.destino.data,
+         data_inicio=form.data_inicio.data,
+          data_termino=form.data_termino.data,
+           roteiro=form.roteiro.data,
+           autor=current_user)
+        flash(f'Viagem para {form.destino.data}, modificada com sucesso!', 'alert-success')
+        return redirect(url_for('usuarios'))
+    return render_template('editarviagem.html', form=form, viagem=viagem)

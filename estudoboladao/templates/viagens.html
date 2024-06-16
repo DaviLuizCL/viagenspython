@@ -13,7 +13,7 @@
                     <h6 class="card-subtitle mb-2 text-muted">Data de Término: {{ viagem.data_termino.strftime('%d-%m-%Y') }}</h6>
                     <p class="card-text">{{ viagem.roteiro }}</p>
                     <!-- Botão Editar -->
-                    <a href="#" class="btn btn-primary me-2">Editar</a> <a href="#" class="btn btn-danger">Excluir</a>
+                    <a href="{{ url_for('editar_viagem', viagem_id=viagem.id) }}" class="btn btn-primary me-2">Editar</a> <a href="#" class="btn btn-danger">Excluir</a>
                 </div>
             </div>
         </div>

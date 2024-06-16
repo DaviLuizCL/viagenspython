@@ -38,3 +38,16 @@ class FormCriarViagem(FlaskForm):
             if field.data < self.data_inicio.data:
                 raise ValidationError('A data de término deve ser posterior à data de início.')
 
+
+class FormEditarViagem(FlaskForm):
+    destino = StringField('Destino', validators=[DataRequired(), Length(2, 50)])
+    data_inicio = DateField('Data de início', format='%Y-%m-%d')
+    data_termino = DateField('Data de término', format='%Y-%m-%d')
+    roteiro = StringField('Roteiro da viagem', validators=[DataRequired(), Length(5, 1000)])
+    botao_submit_editarViagem = SubmitField('Editar viagem')
+
+    def validate_data_termino(self, field):
+        if self.data_inicio.data and field.data:
+            if field.data < self.data_inicio.data:
+                raise ValidationError('A data de término deve ser posterior à data de início.')
+

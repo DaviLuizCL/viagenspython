@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="col">
+
+        <form method="POST" action="" class="border">
+            {{ form.csrf_token }}
+            <legend>Editar Viagem</legend>
+           <fieldset>
+            <div class="form-group">
+                {{ form.destino.label(class="form-control-label") }}
+                {{ form.destino(class="form-control") }}          
+        </div>
+        <div class="form-group">
+            {{ form.data_inicio.label(class="form-control-label") }}
+            {{ form.data_inicio(class="form-control", placeholder="dd-mm-yyyy") }}
+        </div>
+        <div class="form-group">
+            {{ form.data_termino.label(class="form-control-label") }}
+            {{ form.data_termino(class="form-control", placeholder="dd-mm-yyyy") }}
+        </div>
+        <div class="form-group">
+            {{ form.roteiro.label(class="form-control-label") }}
+            {{ form.roteiro(class="form-control") }}
+        </div>
+        {{ form.botao_submit_editarViagem(class="btn btn-primary mt-2") }}
+{% endblock %}
