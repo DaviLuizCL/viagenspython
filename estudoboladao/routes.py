@@ -14,7 +14,7 @@ def contato():
     return render_template('contato.html')
 
 
-@app.route('/usuarios')
+@app.route('/viagens')
 @login_required
 def usuarios():
     viagens = Viagem.query.all()

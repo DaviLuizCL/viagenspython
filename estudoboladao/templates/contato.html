@@ -3,22 +3,22 @@
 {% block body %}
     <div class="container text-center">
         <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
-            <button onclick="window.history.back();" class="btn btn-secondary">Voltar</button>
-            <img src="{{ url_for('static', filename='selo.jpg') }}" alt="Selo" class="img-fluid mx-auto rounded" style="max-width: 200px; height: auto;">
-            <a href="https://www.youtube.com/watch?v=jE8QEADRB9w" target="_blank" class="btn btn-primary float-right">Verdade Irrefutavel</a>
+           <marquee><button onclick="window.history.back();" class="btn btn-secondary">Voltar</button></marquee>
+            <img src="{{ url_for('static', filename='selo.jpg') }}" alt="Selo" class="img-fluid mx-auto rounded me-5 moving-text" style="max-width: 200px; height: auto;">
+           <marquee> <a href="https://www.youtube.com/watch?v=jE8QEADRB9w" target="_blank" class="btn btn-danger float-right">Hino Grupal</a></marquee>
         </div>
         <div class="row">
             <div class="col-md-6 text-md-right">
-                <h1 class="mb-3">Grupo de macacos que realizaram esse projeto:</h1>
-                <h2 class="mt-3">Função dos participantes:</h2>
-                <h4 class="mt-3">Davi: Reclamar</h4>
+                <h1 class="mb-3 moving-text">Grupo de macacos que realizaram esse projeto:</h1>
+                <marquee><h2 class="mt-3">Função dos participantes:</h2></marquee>
+                <h4 class="mt-3 moving-text">Davi: Reclamar</h4>
                 <h4 class="mt-3">Felipe: "Preferia em Java"</h4>
-                <h4 class="mt-3">Olenildo: Fazer raiva</h4>
+                <h4 class="mt-3 moving-text">Olenildo: Fazer raiva</h4>
                 <h4 class="mt-3">Fernando: Atrapalhar</h4>
                 <h5 class="mt-3 moving-text">"Pode não parecer, mas o nosso amor pelo front é real"</h5>
             </div>
             <div class="col-md-6 text-left">
-                <marquee><img src="{{ url_for('static', filename='povo.jpg') }}" class="img-fluid rounded" style="max-width: 100%; height: auto;"></marquee>
+                <img src="{{ url_for('static', filename='povo.jpg') }}" class="img-fluid rounded moving-text" style="max-width: 100%; height: auto;">
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
     <style>
         body {
             background-color: green;
-            color: rgb(0, 0, 0);
+            color: rgb(255, 153, 0);
         }
 
         img.rounded {
