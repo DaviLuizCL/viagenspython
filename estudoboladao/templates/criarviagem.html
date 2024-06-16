@@ -4,6 +4,7 @@
     <div class="col">
 
         <form method="POST" action="" class="border">
+            {{ form_criarViagem.csrf_token }}
             <legend>Criar Viagem</legend>
            <fieldset>
             <div class="form-group">
@@ -18,4 +19,9 @@
             {{ form_criarViagem.data_termino.label(class="form-control-label") }}
             {{ form_criarViagem.data_termino(class="form-control", placeholder="dd-mm-yyyy") }}
         </div>
+        <div class="form-group">
+            {{ form_criarViagem.roteiro.label(class="form-control-label") }}
+            {{ form_criarViagem.roteiro(class="form-control") }}
+        </div>
+        {{ form_criarViagem.botao_submit_criarViagem(class="btn btn-primary mt-2") }}
 {% endblock %}

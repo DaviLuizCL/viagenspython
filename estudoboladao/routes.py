@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash, request
 from estudoboladao import app, database, bcrypt
 from estudoboladao.forms import FormLogin, FormCriarConta, FormCriarViagem
-from estudoboladao.models import Usuario
+from estudoboladao.models import Usuario, Viagem
 from flask_login import login_user, logout_user, current_user, login_required
 lista_usuarios = ['Lira', 'João', 'Alon', 'Alessandra', 'Amanda']
 @app.route('/')
@@ -17,7 +17,8 @@ def contato():
 @app.route('/usuarios')
 @login_required
 def usuarios():
-    return render_template('usuarios.html', lista_usuarios=lista_usuarios)
+    viagens = Viagem.query.all()
+    return render_template('viagens.html', viagens=viagens)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -57,8 +58,19 @@ def sair():
 def perfil():
     return render_template('perfil.html')
 
-@app.route('/viagem/criar')
+@app.route('/viagem/criar', methods=['GET', 'POST'])
 @login_required
 def criar_viagem():
     form_criarViagem = FormCriarViagem()
+    #Destino, data de inicio, data de termino e roteiro
+    if form_criarViagem.validate_on_submit() and 'botao_submit_criarViagem' in request.form:
+        viagem = Viagem(destino=form_criarViagem.destino.data,
+         data_inicio=form_criarViagem.data_inicio.data,
+          data_termino=form_criarViagem.data_termino.data,
+           roteiro=form_criarViagem.roteiro.data,
+           autor=current_user)
+        database.session.add(viagem)
+        database.session.commit()
+        flash(f'Viagem para {form_criarViagem.destino.data}, criada com sucesso!', 'alert-success')
+        return redirect(url_for('usuarios'))
     return render_template('criarviagem.html', form_criarViagem=form_criarViagem)
