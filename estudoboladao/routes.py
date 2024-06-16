@@ -102,3 +102,14 @@ def editar_viagem(viagem_id):
         flash(f'Viagem para {form.destino.data}, modificada com sucesso!', 'alert-success')
         return redirect(url_for('usuarios'))
     return render_template('editarviagem.html', form=form, viagem=viagem)
+
+
+@app.route('/viagem/<viagem_id>/excluir', methods=['GET', 'POST'])
+@login_required
+def excluir_viagem(viagem_id):
+    viagem = Viagem.query.get(viagem_id)
+
+    database.session.delete(viagem)
+    database.session.commit()
+    flash('Post Excluído', 'alert-danger')
+    return redirect(url_for('usuarios'))
