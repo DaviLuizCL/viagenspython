@@ -17,37 +17,32 @@
                     <p class="card-text">{{ viagem.roteiro }}</p>
                     <!-- Botões Editar e Excluir -->
                     <a href="{{ url_for('editar_viagem', viagem_id=viagem.id) }}" class="btn btn-primary me-2">Editar</a>
-                    <a href="#excluir_viagem" data-bs-toggle="modal" data-bs-target="#excluir_viagem" class="btn btn-danger">Excluir</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#excluirViagemModal{{ viagem.id }}">Excluir</button>
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-<div class="modal fade" id="excluir_viagem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Tem certeza?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        <!-- Modal para cada viagem -->
+        <div class="modal fade" id="excluirViagemModal{{ viagem.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="excluirViagemLabel{{ viagem.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="excluirViagemLabel{{ viagem.id }}">Tem certeza?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Não será possível recuperar nada dessa viagem caso prossiga, deseja realmente excluir a viagem para {{ viagem.destino }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <form method="POST" action="{{ url_for('excluir_viagem', viagem_id=viagem.id) }}">
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          Não será possível recuperar nada dessa viagem caso prossiga, deseja realmente excluir a viagem para <b>{{ viagem.destino }}</b>?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <form method="POST", action="{{ url_for('excluir_viagem', viagem_id=viagem.id) }}">
-                   <button type="submit" class="btn btn-danger">Excluir</button>
-          </form>
-   
-        </div>
-      </div>
-    </div>
-  </div>
         {% endfor %}
     </div>
 </div>
-
-
-
 {% endblock %}
-
-
