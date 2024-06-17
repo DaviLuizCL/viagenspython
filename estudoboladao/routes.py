@@ -71,6 +71,9 @@ def criar_viagem():
         database.session.commit()
         flash(f'Viagem para {form_criarViagem.destino.data}, criada com sucesso!', 'alert-success')
         return redirect(url_for('usuarios'))
+
+    else:
+        flash(f'Erro na criação de viagem', 'alert-danger')
     return render_template('criarviagem.html', form_criarViagem=form_criarViagem)
 
 
@@ -121,7 +124,7 @@ def pesquisar_viagem():
     data_inicio = request.args.get('data_inicio', '')
     data_termino = request.args.get('data_termino', '')
 
-    viagens = Viagem.query
+    viagens = Viagem.query.filter_by(current_user).all()
     if destino:
         viagens = viagens.filter(Viagem.destino.ilike(f'%{destino}%'))
     if data_inicio:
