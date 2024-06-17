@@ -133,5 +133,5 @@ def pesquisar_viagem():
         viagens = viagens.filter(Viagem.data_termino <= data_termino)
 
     viagens = viagens.all()
-    
+    #teste
     return render_template('pesquisar_viagem.html', viagens=viagens)
