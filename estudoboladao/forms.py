@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from datetime import datetime
 from estudoboladao. models import Usuario
 
 
@@ -38,6 +39,14 @@ class FormCriarViagem(FlaskForm):
             if field.data < self.data_inicio.data:
                 raise ValidationError('A data de término deve ser posterior à data de início.')
 
+    def validate_data_inicio(self, field):
+        data_hoje = datetime.now().date()  
+        if field.data:
+            data_inicio = field.data
+            if isinstance(data_inicio, datetime):
+                data_inicio = data_inicio.date()  
+            if data_inicio < data_hoje:
+                raise ValidationError('Preencha a data de início corretamente')
 
 class FormEditarViagem(FlaskForm):
     destino = StringField('Destino', validators=[DataRequired(), Length(2, 50)])
