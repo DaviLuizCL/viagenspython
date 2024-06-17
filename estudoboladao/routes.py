@@ -16,7 +16,7 @@ def contato():
 @app.route('/viagens')
 @login_required
 def usuarios():
-    viagens = Viagem.query.all()
+    viagens = Viagem.query.filter_by(autor=current_user).all()
     return render_template('viagens.html', viagens=viagens)
 
 
