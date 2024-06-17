@@ -124,7 +124,7 @@ def pesquisar_viagem():
     data_inicio = request.args.get('data_inicio', '')
     data_termino = request.args.get('data_termino', '')
 
-    viagens = Viagem.query.filter_by(current_user).all()
+    viagens = Viagem.query.filter_by(autor=current_user)
     if destino:
         viagens = viagens.filter(Viagem.destino.ilike(f'%{destino}%'))
     if data_inicio:
