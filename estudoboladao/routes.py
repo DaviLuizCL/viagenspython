@@ -110,7 +110,7 @@ def excluir_viagem(viagem_id):
 
     database.session.delete(viagem)
     database.session.commit()
-    flash('Post Excluído', 'alert-danger')
+    flash('Viagem Excluída', 'alert-danger')
     return redirect(url_for('usuarios'))
 
 
