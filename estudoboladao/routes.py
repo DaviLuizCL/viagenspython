@@ -102,6 +102,8 @@ def editar_viagem(viagem_id):
            autor=current_user)
         flash(f'Viagem para {form.destino.data}, modificada com sucesso!', 'alert-success')
         return redirect(url_for('usuarios'))
+    elif request.method == 'POST':
+        flash(f'Erro na edição de viagem', 'alert-danger')
     return render_template('editarviagem.html', form=form, viagem=viagem)
 
 
